@@ -1,23 +1,21 @@
-<script setup>
-import { defineProps, defineEmits, ref } from "vue";
+<script setup lang="ts">
+import { ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
+import { EditTaskProps, EditTaskEmits } from '../types/Tasks';
 
-const props = defineProps({
-  taskText: String,
-});
-
-const emits = defineEmits(["saveEdit", "cancelEdit"]);
+const props = defineProps<EditTaskProps>();
+const emits = defineEmits<EditTaskEmits>();
 
 const localTaskText = ref(props.taskText);
 
 const saveEdit = () => {
-  if (localTaskText.value.trim() !== "") {
-    emits("saveEdit", localTaskText.value);
-    taskText.value="";
+  if (localTaskText.value.trim() !== '') {
+    emits('saveEdit', localTaskText.value);
   }
 };
 
 const cancelEdit = () => {
-  emits("cancelEdit");
+  emits('cancelEdit');
 };
 </script>
 

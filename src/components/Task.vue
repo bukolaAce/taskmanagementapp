@@ -1,10 +1,11 @@
- <script setup>
+<script setup lang="ts">
 import { reactive, onMounted, watch } from 'vue';
-import AddTask from './AddTask.vue';
-import TaskList from './TaskList.vue';
-import Modal from './Modal.vue';
+import AddTask from '@/components/AddTask.vue';
+import TaskList from '@/components/TaskList.vue';
+import Modal from '@/components/Modal.vue';
+import { AppState, Task } from '@/types/Tasks';
 
-const state = reactive({
+const state = reactive<AppState>({
   tasks: [],
   newTask: '',
   editingTaskIndex: null,
@@ -34,20 +35,19 @@ const addTask = () => {
   }
 };
 
-const deleteTask = (index) => {
+const deleteTask = (index: number) => {
   state.tasks.splice(index, 1);
 };
 
-const editTask = (index) => {
-  // console.log("Editing task at index:", index); Debugging log
+const editTask = (index: number) => {
   state.editingTaskIndex = index;
   state.editingTaskText = state.tasks[index].text;
   state.openModal = true;
 };
 
-const saveEdit = (updatedText) => {
+const saveEdit = (updatedText: string) => {
   if (updatedText.trim() !== '') {
-    state.tasks[state.editingTaskIndex].text = updatedText;
+    state.tasks[state.editingTaskIndex as number].text = updatedText;
     state.editingTaskIndex = null;
     state.openModal = false;
   }
@@ -59,7 +59,7 @@ const cancelEdit = () => {
   state.openModal = false;
 };
 
-const toggleDone = (index) => {
+const toggleDone = (index: number) => {
   state.tasks[index].done = !state.tasks[index].done;
 };
 </script>

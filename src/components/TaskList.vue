@@ -1,12 +1,11 @@
-<script setup>
-import { defineProps, defineEmits } from "vue";
-import DeleteTask from "./DeleteTask.vue";
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+import DeleteTask from './DeleteTask.vue';
+import { TaskListProps, TaskListEmits } from '../types/Tasks';
 
-const props = defineProps({
-  tasks: Array,
-});
+const props = defineProps<TaskListProps>();
+const emits = defineEmits<TaskListEmits>();
 
-const emits = defineEmits(["editTask", "deleteTask", "toggleDone"]);
 </script>
 
 <template>
@@ -18,9 +17,9 @@ const emits = defineEmits(["editTask", "deleteTask", "toggleDone"]);
     <li
       v-for="(task, index) in tasks"
       :key="index"
-      class="w-[90%] md:w-[60%] bg-blue-900 rounded-md p-3 text-xl font-bold flex items-center justify-between text-white"
+      class="w-full md:w-[60%] bg-blue-900 rounded-md p-3 sm:text-xl text-lg font-bold flex items-center justify-between text-white f"
     >
-      <div class="flex items-center gap-2">
+      <div class="flex items-center flex-1 gap-2">
         <input
           type="checkbox"
           defaultChecked
@@ -28,14 +27,14 @@ const emits = defineEmits(["editTask", "deleteTask", "toggleDone"]);
           className="checkbox checkbox-md"
           @click="emits('toggleDone', index)"
         />
-        <span :class="{ 'line-through': task.done }">
+        <span :class="{ 'line-through': task.done } ">
           {{ task.text }}
         </span>
       </div>
       <div class="flex gap-2">
         <button
           @click="emits('editTask', index)"
-          class="px-4 py-2 text-white bg-blue-800 border-none btn hover:bg-blue-700"
+          class="px-2 py-2 text-sm text-white bg-blue-800 border-none rounded sm:px-2 sm:text-md hover:bg-blue-700 sm:py-2"
         >
           Edit
         </button>
